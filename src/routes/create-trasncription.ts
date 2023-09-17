@@ -26,7 +26,7 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
 
         const videoPath = video.path
         const audioReadStream = createReadStream(videoPath)
-        
+
         const response = await openai.audio.transcriptions.create({
             file: audioReadStream,
             model: 'whisper-1',
@@ -36,6 +36,17 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
             prompt,
         })
 
-        return response.text
+        const transcription = response.text
+
+        return prisma.video.update({
+            where: {
+                id: videoId,
+            },
+            data: {
+                transcription,
+            }
+        })
+
+        return { transcription }
     })
 }

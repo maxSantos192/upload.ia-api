@@ -17,9 +17,21 @@ Content-Type: audio/mpeg
 ###
 
 # @name create-transcription
-POST http://localhost:3333/videos/28b92e17-f8d8-4ce3-8810-617f078bb9b2/transcription
+POST http://localhost:3333/videos/0d5b89e0-6598-43e9-81fd-5b8c3eea59a1/transcription
 Content-Type: application/json
 
 {
     "prompt": "entrevista de futebol"
+}
+
+###
+
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "0d5b89e0-6598-43e9-81fd-5b8c3eea59a1",
+    "temperature": 0.5,
+    "template": "Gere um resumo da transcrição do video informada a seguir: '''{transcription}'''"
 }
